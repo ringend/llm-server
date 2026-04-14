@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo docker run -d \
+  --name llama-cpp-phi4 \
+  --device /dev/dri \
+  -p 8110:8080 \
+  -v /usr/share/vulkan/icd.d:/usr/share/vulkan/icd.d:ro \
+  -v /llm-models:/models \
+  ghcr.io/ggml-org/llama.cpp:server-vulkan \
+  --model /models/phi-4-Q4_K.gguf \
+  --gpu-layers 60 \
+  --host ::

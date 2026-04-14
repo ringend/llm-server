@@ -1,0 +1,31 @@
+#!/bin/bash
+
+CONTAINER_NAME="llama-cpp-phi4"
+
+if sudo docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
+  echo "Stopping container: $CONTAINER_NAME"
+  sudo docker stop "$CONTAINER_NAME"
+fi
+
+if sudo docker ps -a --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
+  echo "Removing container: $CONTAINER_NAME"
+  sudo docker rm "$CONTAINER_NAME"
+fi
+
+sudo docker run -d \
+  --name "$CONTAINER_NAME" \
+  --device /dev/dri \
+  -p 8110:8080 \
+  -v /usr/share/vulkan/icd.d:/usr/share/vulkan/icd.d:ro \
+  -v /llm-models:/models \
+  ghcr.io/ggml-org/llama.cpp:server-vulkan \
+  --model /models/phi-4-Q4_K.gguf \
+  --gpu-layers -1 \
+  --ctx-size 32768 \
+  --parallel 4 \
+  --batch-size 1024 \
+  --ubatch-size 256 \
+  --cont-batching \
+  --flash-attn on \
+  --host :: \
+  --port 8080
