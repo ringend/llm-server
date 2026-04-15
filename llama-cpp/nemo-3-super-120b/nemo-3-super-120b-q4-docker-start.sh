@@ -2,8 +2,8 @@
 
 #####################################
 # Container & LLM model varible
-CONTAINER_NAME="gemma-4-26B-A4B-it-Q8_0"
-LLM_MODEL="/llm-models/gemma-4-26B-A4B-it-Q8_0.gguf"
+CONTAINER_NAME="nemo-3-super-120b-q4"
+LLM_MODEL="/llm-models/nemo-3-super-120b-q4/nvidia_Nemotron-3-Super-120B-A12B-Q4_K_M-00001-of-00003.gguf"
 
 if sudo docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Stopping container: $CONTAINER_NAME"
@@ -18,14 +18,14 @@ fi
 sudo docker run -d \
   --name "$CONTAINER_NAME" \
   --device /dev/dri \
-  -p 8130:8080 \
+  -p 8135:8080 \
   -v /usr/share/vulkan/icd.d:/usr/share/vulkan/icd.d:ro \
   -v /llm-models:/llm-models \
   cr.ringen.cloud:5000/llama.cpp:server-vulkan-b8763-04-11-26 \
   --model "$LLM_MODEL" \
   --gpu-layers -1 \
   --parallel 2 \
-  --ctx-size 65536 \
+  --ctx-size 131072 \
   --batch-size 1024 \
   --ubatch-size 256 \
   --cont-batching \
