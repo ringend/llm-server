@@ -8,7 +8,9 @@
 
 #####################################
 # Container Name varible
-CONTAINER_NAME="llama-cpp-gemma-4-31b-q4k"
+CONTAINER_NAME="llama-cpp-gemma-4-31b-it-q8"
+LLM_MODEL="/llm-models/gemma-4-31B-it-Q8_0.gguf"
+
 
 if sudo docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Stopping container: $CONTAINER_NAME"
@@ -26,11 +28,11 @@ sudo docker run -d \
   -p 8130:8080 \
   -v /usr/share/vulkan/icd.d:/usr/share/vulkan/icd.d:ro \
   -v /llm-models:/llm-models \
-  ghcr.io/ggml-org/llama.cpp:server-vulkan-b8763@sha256:d2c65aa5d29e592f31db7f0d8158cdfc72a8fe9319ee0279772e270dd8a01ca1 \
-  --model /llm-models/gemma4-q4_k.gguf \
+  cr.ringen.cloud:5000/llama.cpp:server-vulkan-b8763-04-11-26 \
+  --model "$LLM_MODEL" \
   --gpu-layers -1 \
   --parallel 2 \
-  --ctx-size 32768 \
+  --ctx-size 262144 \
   --batch-size 1024 \
   --ubatch-size 256 \
   --cont-batching \
@@ -38,6 +40,7 @@ sudo docker run -d \
   --metrics \
   --host :: \
   --port 8080
+
 
 ################################################################
 # Verify container startup and health (if a HEALTHCHECK exists)

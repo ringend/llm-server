@@ -23,8 +23,8 @@ sudo docker run -d \
   cr.ringen.cloud:5000/llama.cpp:server-vulkan-8067-ff4affb4c \
   --model /models/gpt-oss-120b-mxfp4/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
   --gpu-layers -1 \
-  --parallel 1 \
-  --ctx-size 32768 \
+  --parallel 6 \
+  --ctx-size 786432 \
   --batch-size 1024 \
   --ubatch-size 256 \
   --cont-batching \
