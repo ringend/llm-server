@@ -24,12 +24,15 @@ sudo docker run -d \
   cr.ringen.cloud:5000/llama.cpp:server-vulkan-b8763-04-11-26 \
   --model "$LLM_MODEL" \
   --gpu-layers -1 \
-  --parallel 2 \
-  --ctx-size 524288 \
+  --parallel 6 \
+  --ctx-size 	1075200 \
   --batch-size 1024 \
   --ubatch-size 256 \
+  --cache-ram 0 \
   --cont-batching \
   --flash-attn on \
+  --cache-type-k q8_0 \
+  --cache-type-v q8_0 \
   --metrics \
   --host :: \
   --port 8080
