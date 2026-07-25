@@ -25,6 +25,7 @@ sudo docker run -d \
   cr.ringen.cloud:5000/llama.cpp:server-vulkan-b10121-07-25-26 \
   --model "$LLM_MODEL" \
   --alias "$MODEL_ALIAS" \
+  --jinja \
   --gpu-layers -1 \
   --parallel 3 \
   --ctx-size 528384 \
