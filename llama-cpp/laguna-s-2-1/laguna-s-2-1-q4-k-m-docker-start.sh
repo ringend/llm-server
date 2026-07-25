@@ -2,9 +2,9 @@
 
 #####################################
 # Container & LLM model varible
-CONTAINER_NAME="llama-cpp-qwen3-6-35b-q8_0"
-LLM_MODEL="/llm-models/qwen3.6-35b-a3b-q8_0.gguf"
-MODEL_ALIAS="qwen3.6-35b-a3b"
+CONTAINER_NAME="llama-cpp-laguna-s-2_1-Q4_K_M"
+LLM_MODEL="/llm-models/laguna-s-2.1-Q4_K_M.gguf"
+MODEL_ALIAS="laguna-s-2_1"
 
 if sudo docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "Stopping container: $CONTAINER_NAME"
@@ -19,15 +19,15 @@ fi
 sudo docker run -d \
   --name "$CONTAINER_NAME" \
   --device /dev/dri \
-  -p 8130:8080 \
+  -p 8120:8080 \
   -v /usr/share/vulkan/icd.d:/usr/share/vulkan/icd.d:ro \
   -v /llm-models:/llm-models \
   cr.ringen.cloud:5000/llama.cpp:server-vulkan-b10121-07-25-26 \
   --model "$LLM_MODEL" \
   --alias "$MODEL_ALIAS" \
   --gpu-layers -1 \
-  --parallel 6 \
-  --ctx-size 	1075200 \
+  --parallel 3 \
+  --ctx-size 528384 \
   --batch-size 1024 \
   --ubatch-size 256 \
   --cache-ram 0 \
