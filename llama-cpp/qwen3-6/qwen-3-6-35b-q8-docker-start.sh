@@ -27,7 +27,7 @@ sudo docker run -d \
   --alias "$MODEL_ALIAS" \
   --gpu-layers -1 \
   --parallel 6 \
-  --ctx-size 	1075200 \
+  --ctx-size 1344000 \
   --batch-size 1024 \
   --ubatch-size 256 \
   --cache-ram 0 \
